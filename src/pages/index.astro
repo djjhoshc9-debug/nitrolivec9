@@ -1,0 +1,307 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import { siteConfig } from "@/config/site";
+import Hero from "@/components/widgets/Hero.astro";
+import Features from "@/components/widgets/Features.astro";
+import devImg from "@/assets/images/dev_balanced.png";
+import Content2 from "@/components/widgets/Content2.astro";
+import Integrations from "@/components/widgets/Integrations.astro";
+import ServiceList from "@/components/widgets/ServiceList.astro";
+import Content from "@/components/widgets/Content.astro";
+import webDevImg from "@/assets/images/services/web-dev.webp";
+import seoImg from "@/assets/images/services/seo.webp";
+import consultingImg from "@/assets/images/services/consulting.webp";
+import DownloadSection from "@/components/widgets/DownloadSection.astro";
+import Headline from "@/components/ui/Headline.astro";
+import PostItem from "@/components/blog/PostItem.astro";
+
+const metadata = {
+  title: `${siteConfig.name} — Alquiler de equipo de sonido y más...`,
+  description:
+    "Alquiler de equipos de sonido, música en vivo, radio online y mas...",
+  ignoreTitleTemplate: true,
+  title2: "Blog",
+};
+const services = [
+  {
+    title: "Servicios Para Empresas",
+    description: "Ofrecemos equipo profesional de audio para reuniones, conferencias  y capacitaciones.",
+    icon: "lucide:play",
+  },
+  {
+    title: "Celebraciones Y Eventos",
+    description: "Tenemos una variedad de planes que se ajustan a tu evento o celebración XV años, bodas, cumpleaños, parkings, etc.",
+    icon: "lucide:pause",
+  },
+  {
+    title: "Activaciones y Perifoneo",
+    description: "Unidad movil para realizar campañas de perifoneo y activaciones para impulsar marcas, promocionar productos, anunciar servicios, campañas politicas ect.",
+    icon: "lucide:square",
+  },
+];
+const visionText = ["Contactanos para tu próximo evento."];
+
+
+/**export async function getStaticPaths({ paginate }: GetStaticPathsOptions) {
+  const blogEntries = await getCollection("blog");
+  const sortedPosts = blogEntries
+    .filter((post) => post.data && post.data.pubDate)
+    .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+
+  return paginate(sortedPosts, { pageSize: 6 });
+}
+const { page } = Astro.props;
+const blog = page.data;**/
+import { getCollection } from "astro:content";
+
+const blog = await getCollection("blog");
+
+const sortedPosts = blog
+  .filter((post) => post.data && post.data.pubDate)
+  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
+  .slice(0, 6); // últimos 6 artículos
+
+
+
+---
+
+<BaseLayout {metadata}>
+  <Hero
+  id="inicio"
+    title={`Nitro Live C9<br class="hidden md:block" /> <span class="bg-linear-to-r from-blue-400 via-purple-400 to-pink-400 bg-clip-text text-transparent">Haz que tu evento salga como lo imaginaste</span>`}
+    /*tagline="Astro v5 + Tailwind v4"*/
+    description={`${siteConfig.description}`}
+    actions={[
+      {
+        text: "WhatsApp (Contáctanos)",
+        href: "https://wa.me/message/J7BEDY5ZTIQSC1",
+        target: "_blank",
+        rel: "noopener noreferrer",
+        variant: "primary",
+        icon: "lucide:radio",
+      },
+      {
+        text: "Nuestros Planes",
+        href: "https://wa.me/message/J7BEDY5ZTIQSC1",
+        target: "_blank",
+        rel: "noopener noreferrer",
+        variant: "secondary",
+        icon: "lucide:arrow-right",
+        ariaLabel: "Nuestros planes disponibles",
+      },
+    ]}
+  />
+  <Features
+    tagline="Beneficios"
+    title="Que nos diferencia"
+    subtitle="Nos involucramos en tu evento como si fuera nuestro. Cada detalle importa para que todo salga como lo planeaste."
+    features={[
+      {
+        title: "Puntualidad",
+        description:
+          "Llegamos con tiempo para montar, realizar pruebas y asegurarnos de que todo esté listo antes de que inicie tu evento.",
+        icon: "lucide:handshake",
+        iconClass: "bg-blue-500/10 text-blue-400",
+      },
+      {
+        title: "Solución completa",
+        description: "Sonido profesional, iluminación y DJ en un solo servicio, adaptado al tipo de evento y a tus necesidades.",
+        icon: "lucide:audio-lines",
+        iconClass: "bg-purple-500/10 text-purple-400",
+      },
+      {
+        title: "Atención personalizada",
+        description:
+          "Escuchamos lo que necesitas y te recomendamos el plan más adecuado, sin venderte más de lo que realmente requieres.",
+        icon: "lucide:calendar-check-2",
+        iconClass: "bg-pink-500/10 text-pink-400",
+      },
+    ]}
+  />
+  <Integrations
+    title="Marcas Asociadas"
+    subtitle="Otros productos o servicios asociados."
+    tagline="ASOCIADOS"
+    integrations={[
+      { name: "PixelPremiumCraft", icon: "tabler:brand-instagram", url: "https://www.instagram.com/pixelpremiumcraft/" },
+      { name: "Dj Jhosh C9", icon: "tabler:brand-instagram", url: "https://www.instagram.com/djjhoshc9/" },
+      { name: "DJs", icon: "tabler:vinyl", url: "https://www.instagram.com/nitrolivec9/" },
+      { name: "NitroLiveC9", icon: "tabler:brand-instagram", url: "https://www.instagram.com/nitrolivec9/" },
+    ]}
+  />
+    <Content
+    id="servicios"
+    tagline="Servicios"
+    title="Nuestros Servicios"
+    description={[
+      "Soluciones de sonido, iluminación y entretenimiento para eventos sociales, corporativos y activaciones en Veraguas y provincias centrales.",
+    ]}
+  />
+  <ServiceList services={services} classes={{ container: "pt-0 md:pt-0" }} />
+  <Content
+    tagline="Uno para cada evento"
+    title="Planes Personalizados"
+    description={[
+      "Utilizamos diferentes configuraciones de equipo para que usted como cliente se sienta con total livertad para elegir.",
+    ]}
+    classes={{ container: "pb-0 md:pb-0" }}
+  />
+  <Content2
+    items={[
+      {
+        title: "Equipos de audio de alta calidad",
+        description:
+          "Sonido claro y confiable para reuniones, conferencias, capacitaciones, lanzamientos y todo tipo de eventos corporativos.",
+      },
+      {
+        title: "Instalación y asistencia técnica",
+        description:
+          "Nos encargamos del montaje, las pruebas y el soporte técnico antes y durante el evento para que todo funcione como lo planeaste.",
+      },
+    ]}
+    image={webDevImg}
+    imageAlt="Servicios para empresas"
+    classes={{ container: "pt-0 md:pt-0" }}
+  >
+    <Fragment>
+      <h3 class="text-2xl font-bold tracking-tight sm:text-3xl mb-2">
+        Servicio Para Empresa
+      </h3>
+      Haz que tus reuniones, conferencias y eventos empresariales se escuchen con 
+      claridad y se desarrollen sin contratiempos. Nos encargamos del sonido para 
+      que tú puedas concentrarte en el éxito de tu actividad.
+    </Fragment>
+  </Content2>
+
+  <Content2
+    isReversed={true}
+    items={[
+      {
+        title: "Planes personalizados",
+        description:
+          "Te ayudamos a elegir el plan que mejor se adapta al tipo de evento, la cantidad de invitados y tu presupuesto.",
+      },
+      {
+        title: "Montaje y soporte técnico",
+        description:
+          "Nos encargamos del montaje, las pruebas y el soporte durante el evento para que todo salga como lo planeaste.",
+      },
+    ]}
+    image={seoImg}
+    imageAlt="Celebraciones y eventos"
+  >
+    <Fragment>
+      <h3 class="text-2xl font-bold tracking-tight sm:text-3xl mb-2">
+        Celebraciones y Eventos
+      </h3>
+      Disfruta de tu celebración con la tranquilidad de saber que el sonido, la 
+      iluminación y la música están en buenas manos. Nos adaptamos a cada evento 
+      para crear el ambiente ideal en XV años, bodas, cumpleaños, fiestas privadas, 
+      parkings y reuniones familiares.
+    </Fragment>
+  </Content2>
+
+  <Content2
+    items={[
+      {
+        title: "Amplio alcance local",
+        description:
+          "Lleva tu mensaje directamente a las comunidades y sectores donde se encuentra tu público objetivo.",
+      },
+      {
+        title: "Campañas personalizadas",
+        description:
+          "Adaptamos el recorrido, los horarios y el contenido del perifoneo para lograr el mayor impacto en cada campaña.",
+      },
+    ]}
+    image={consultingImg}
+    imageAlt="Activacion y perifoneo"
+  >
+    <Fragment>
+      <h3 class="text-2xl font-bold tracking-tight sm:text-3xl mb-2">
+        Activaciones y Perifoneo
+      </h3>
+      Haz que tu marca llegue a más personas con nuestro servicio de activaciones 
+      y perifoneo móvil. Diseñamos campañas adaptadas a tus objetivos para 
+      promocionar productos, anunciar servicios, impulsar aperturas y fortalecer 
+      la presencia de tu negocio en zonas estratégicas.
+    </Fragment>
+
+  </Content2>
+   <section class="relative px-4 py-8 sm:px-6 lg:px-8 md:py-12">
+    <div class="absolute inset-0 z-0">
+      <div
+        class="absolute inset-0 bg-linear-to-br from-blue-500/5 via-transparent to-pink-500/5"
+      >
+      </div>
+    </div>
+    <div class="relative mx-auto max-w-5xl" id="blog">
+      <Headline
+        tagline="Blog"
+        title="Noticias NitroLive"
+        subtitle="Descubre las últimas noticias, artículos y tutoriales"
+        classes={{
+          container: "reveal mb-12 text-center",
+          title2:
+            "font-heading mb-4 text-4xl font-bold tracking-tight text-foreground md:text-6xl",
+          subtitle: "mx-auto max-w-3xl text-xl text-muted-foreground",
+        }}
+      />
+
+      <div class="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+  {sortedPosts.map((post) => (
+    <PostItem post={post} />
+  ))}
+</div>
+    </div>
+
+    <div id="mixes">
+       <DownloadSection />
+      </div>
+    
+  </section>
+  <Features id="contactanos"
+    tagline="Como comunicarte"
+    title="Estamos aquí para ayudarte"
+    subtitle="Elige la forma de comunicarte que prefieras, te atenderemos en menos de 24 horas."
+    classes={{ container: "pt-0 md:pt-0" }}
+    features={[
+      {
+        title: "Phone",
+        description: "+507 6675-5026",
+        icon: "lucide:phone",
+        iconClass: "bg-green-500/10 text-green-400",
+      },
+      {
+        title: "Email",
+        description: "djjhoshc9@gmail.com",
+        icon: "lucide:mail",
+        iconClass: "bg-yellow-500/10 text-yellow-400",
+      },
+      {
+        title: "Location",
+        description: "Provincias centrales",
+        icon: "lucide:map-pin",
+        iconClass: "bg-red-500/10 text-red-400",
+      },
+      {
+        title: "Atención personalizada",
+        description: "Comprendemos sus necesidades para ofrecerle soluciones a medida.",
+        icon: "lucide:user-check",
+        iconClass: "bg-blue-500/10 text-blue-400",
+      },
+      {
+        title: "Soporte ante incidentes",
+        description: "Resolvemos cualquier duda de inmediato.",
+        icon: "lucide:wrench",
+        iconClass: "bg-purple-500/10 text-purple-400",
+      },
+      {
+        title: "Puntualidad y responsabilidad",
+        description: "Somos puntuales y responsables con nuestros clientes.",
+        icon: "lucide:briefcase",
+        iconClass: "bg-pink-500/10 text-pink-400",
+      },
+    ]}
+  />
+</BaseLayout>

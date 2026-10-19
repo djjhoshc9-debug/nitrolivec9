@@ -1,0 +1,99 @@
+---
+import { mp3List } from "@/data/mp3";
+---
+
+<section id="downloads" class="downloads">
+  <h2>Descarga nuestros mixes</h2>
+
+  <div class="grid">
+    {mp3List.map((t) => (
+      <div class="card">
+        <img src={t.cover} alt={t.title} />
+
+        <div class="info">
+          <h3>{t.title}</h3>
+          <span>{t.date} • {t.size}</span>
+
+          <audio controls preload="none">
+            <source src={t.audioUrl} type="audio/mpeg" />
+          </audio>
+
+          <div class="actions">
+            <a
+              class="btn"
+              href={t.downloadUrl}
+              target="_blank"
+              rel="noopener"
+              onclick={`fetch('/api/download?id=${t.id}')`}
+            >
+              Descargar Mix Aquí
+            </a>
+
+            <small>⬇ {t.downloads}</small>
+          </div>
+        </div>
+      </div>
+    ))}
+  </div>
+</section>
+
+<style>
+.downloads {
+  padding: 60px 20px;
+  background: #0b0b0b;
+  color: white;
+}
+
+h2 {
+  text-align: center;
+  font-size: 28px;
+}
+
+.grid {
+  display: grid;
+  gap: 20px;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  margin-top: 30px;
+}
+
+.card {
+  background: #151515;
+  border-radius: 12px;
+  overflow: hidden;
+  padding: 15px;
+}
+
+.card img {
+  width: 100%;
+  height: 160px;
+  object-fit: cover;
+  border-radius: 10px;
+}
+
+.info h3 {
+  margin: 10px 0 5px;
+}
+
+audio {
+  width: 100%;
+  margin-top: 10px;
+}
+
+.actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 10px;
+}
+
+.btn {
+  position: relative;
+  background: #ff0055;
+  padding: 8px 12px;
+  border-radius: 8px;
+  color: white;
+  text-decoration: none;
+  font-weight: bold;
+  
+}
+</style>

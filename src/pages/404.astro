@@ -1,0 +1,31 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import Hero from "@/components/widgets/Hero.astro";
+
+const metadata = {
+  title: "404 - Pagina No Encontrada",
+  description: "La pagina que busca no existe",
+  ignoreTitleTemplate: true,
+};
+---
+
+<BaseLayout {metadata}>
+  <Hero
+    title={`<h1 class="bg-linear-to-r from-blue-400 via-purple-400 to-pink-400 bg-clip-text text-transparent text-[12rem] font-extrabold tracking-tighter mb-4">404</h1>`}
+    description="Disculpa, La pagina que busca no existe, vuelva al inicio o realice otra busqueda."
+    actions={[
+      {
+        variant: "primary",
+        text: "Volver al Inicio",
+        href: "https://nitrolivec9.com/",
+        icon: "lucide:home",
+      },
+      {
+        variant: "secondary",
+        text: "Contactanos",
+        href: "https://nitrolivec9.com/#contactanos",
+        icon: "lucide:phone",
+      },
+    ]}
+  />
+</BaseLayout>

@@ -1,0 +1,66 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import Features from "@/components/widgets/Features.astro";
+import Content from "@/components/widgets/Content.astro";
+import Form from "@/components/ui/Form.astro";
+
+const metadata = {
+  title: "Contactanos",
+  description: "Contactanos para tu próximo evento.",
+};
+
+const visionText = ["Contactanos para tu próximo evento."];
+---
+
+<BaseLayout {metadata}>
+  <Content tagline="Contactanos" title="Contactanos" description={visionText} />
+  <div
+    class="reveal mx-auto max-w-xl bg-card border border-border rounded-3xl p-8 shadow-sm mb-12 md:mb-16"
+  >
+    <Form />
+  </div>
+  <Features
+    tagline="Como comunicarte"
+    title="Estamos aquí para ayudarte"
+    subtitle="Elige la forma de comunicarte que prefieras, te atenderemos en menos de 24 horas."
+    classes={{ container: "pt-0 md:pt-0" }}
+    features={[
+      {
+        title: "Phone",
+        description: "+507 6675-5026",
+        icon: "lucide:phone",
+        iconClass: "bg-green-500/10 text-green-400",
+      },
+      {
+        title: "Email",
+        description: "djjhoshc9@gmail.com",
+        icon: "lucide:mail",
+        iconClass: "bg-yellow-500/10 text-yellow-400",
+      },
+      {
+        title: "Location",
+        description: "Provincias centrales",
+        icon: "lucide:map-pin",
+        iconClass: "bg-red-500/10 text-red-400",
+      },
+      {
+        title: "Atención personalizada",
+        description: "Comprendemos sus necesidades para ofrecerle soluciones a medida.",
+        icon: "lucide:user-check",
+        iconClass: "bg-blue-500/10 text-blue-400",
+      },
+      {
+        title: "Soporte ante incidentes",
+        description: "Resolvemos cualquier duda de inmediato.",
+        icon: "lucide:wrench",
+        iconClass: "bg-purple-500/10 text-purple-400",
+      },
+      {
+        title: "Puntualidad y responsabilidad",
+        description: "Somos puntuales y responsables con nuestros clientes.",
+        icon: "lucide:briefcase",
+        iconClass: "bg-pink-500/10 text-pink-400",
+      },
+    ]}
+  />
+</BaseLayout>

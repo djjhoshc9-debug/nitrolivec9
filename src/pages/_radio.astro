@@ -1,0 +1,59 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import Hero from "@/components/widgets/Hero.astro";
+import Integrations from "@/components/widgets/Integrations.astro";
+
+const heroProps = {
+  
+  title: "Lorem Ipsum Dolor Sit Amet",
+  tagline: "RADIO",
+  description:
+  
+    "Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+  actions: [
+    {
+      text: "Get Started",
+      href: "https://github.com/devgelo-labs/astro-starter-pro",
+      variant: "primary",
+      icon: "lucide:github",
+    },
+    {
+      text: "View Details",
+      href: "#",
+      variant: "secondary",
+      icon: "lucide:arrow-right",
+    },
+  ],
+  
+};
+
+const integrationsProps = {
+  title: "Trusted by top companies",
+  subtitle: "Our platform integrates seamlessly with your favorite tools.",
+  tagline: "Integrations",
+  integrations: [
+    { name: "Astro", icon: "tabler:brand-astro", url: "#" },
+    { name: "Tailwind CSS", icon: "tabler:brand-tailwind", url: "#" },
+    { name: "Vercel", icon: "tabler:brand-vercel", url: "#" },
+    { name: "React", icon: "tabler:brand-react", url: "#" },
+    { name: "GitHub", icon: "tabler:brand-github", url: "#" },
+    { name: "Figma", icon: "tabler:brand-figma", url: "#" },
+    { name: "Supabase", icon: "tabler:brand-supabase", url: "#" },
+    { name: "Stripe", icon: "tabler:brand-stripe", url: "#" },
+    { name: "Slack", icon: "tabler:brand-slack", url: "#" },
+    { name: "Discord", icon: "tabler:brand-discord", url: "#" },
+  ],
+};
+
+
+const metadata = {
+  title: "Radio Online - Nitro Live C9",
+  description: "Disfruta de nuestra radio online.",
+  ignoreTitleTemplate: true,
+};
+---
+
+<BaseLayout {metadata}>
+  <Hero {...heroProps} />
+  <Integrations {...integrationsProps} />
+</BaseLayout>

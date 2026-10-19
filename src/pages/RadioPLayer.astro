@@ -1,0 +1,47 @@
+---
+
+---
+<script src="../scripts/script.js"></script>
+<div class="radio-player">
+      <img src="/blog/radio/logonitro.png" alt="Nitro Live Radio" />
+  <div class="info">
+    <h4>Nitro Live Radio</h4>
+  </div>
+  
+        <audio id="audio" src="https://stream.zeno.fm/45mep448hg8uv/stream"></audio>
+        <div class="player">
+            <div class="loader" id="loader"></div>
+            <img  src="/blog/radio/play.webp" alt="Play/Stop" id="playStopButton">
+        </div>
+</div>
+
+<style>
+.radio-player{
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  padding: 10px 20px;
+  background: rgba(0,0,0,.95);
+  backdrop-filter: blur(10px);
+  z-index: 9999;
+}
+
+.radio-player img{
+  width: 60px;
+  height: 60px;
+  border-radius: 8px;
+}
+
+.radio-player .info{
+  flex: 1;
+  color: white;
+}
+
+.radio-player audio{
+  width: 350px;
+}
+</style>

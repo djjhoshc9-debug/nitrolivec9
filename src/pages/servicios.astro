@@ -1,0 +1,132 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import ServiceList from "@/components/widgets/ServiceList.astro";
+import Content from "@/components/widgets/Content.astro";
+import Content2 from "@/components/widgets/Content2.astro";
+import webDevImg from "@/assets/images/services/web-dev.webp";
+import seoImg from "@/assets/images/services/seo.webp";
+import consultingImg from "@/assets/images/services/consulting.webp";
+
+const services = [
+  {
+    title: "Servicios Para Empresas",
+    description: "Sonido profesional para reuniones, conferencias, capacitaciones, lanzamientos y eventos corporativos donde la comunicación no puede fallar.",
+    icon: "lucide:play",
+  },
+  {
+    title: "Eventos Sociales",
+    description: "Sonido, iluminación y DJ para bodas, quinceaños, cumpleaños y fiestas privadas, adaptándonos al ambiente y al estilo de cada celebración.",
+    icon: "lucide:pause",
+  },
+  {
+    title: "Activaciones y Perifoneo",
+    description: "Unidad móvil para campañas de perifoneo, activaciones de marca, lanzamientos, promociones y eventos que necesitan llegar a más personas.",
+    icon: "lucide:square",
+  },
+];
+const metadata = {
+  title: "Servicios",
+  description:
+    "Servicios que ofrecemos",
+};
+---
+
+<BaseLayout {metadata}>
+  <Content
+    tagline="Servicios"
+    title="Lo Que Ofrecemos"
+    description={[
+      "Algunos de nuestros servicios con el profesionalismo que caracterisa a Nitro Live.",
+    ]}
+  />
+  <ServiceList services={services} classes={{ container: "pt-0 md:pt-0" }} />
+  <Content
+    tagline="UNO PARA CADA EVENTO"
+    title="Planes Personalizados"
+    description={[
+      "Utilizamos diferentes configuraciones de equipo para que usted como cliente se sienta con total livertad para elegir.",
+    ]}
+    classes={{ container: "pb-0 md:pb-0" }}
+  />
+  <Content2
+    items={[
+      {
+        title: "Equipos de audio de alta calidad",
+        description:
+          "Sonido claro y profesional para cualquier tipo de evento empresarial.",
+      },
+      {
+        title: "Instalación y asistencia técnica",
+        description:
+          "Montaje, configuración y soporte durante toda la actividad.",
+      },
+    ]}
+    image={webDevImg}
+    imageAlt="Servicios para empresas"
+    classes={{ container: "pt-0 md:pt-0" }}
+  >
+    <Fragment>
+      <h3 class="text-2xl font-bold tracking-tight sm:text-3xl mb-2">
+        Servicio Para Empresa
+      </h3>
+      Haz que tus reuniones, conferencias y eventos empresariales se escuchen con 
+      claridad y se desarrollen sin contratiempos. Nos encargamos del sonido para 
+      que tú puedas concentrarte en el éxito de tu actividad.
+    </Fragment>
+  </Content2>
+
+  <Content2
+    isReversed={true}
+    items={[
+      {
+        title: "Planes personalizados",
+        description:
+          "Opciones adaptadas al tipo de celebración y presupuesto.",
+      },
+      {
+        title: "Montaje y soporte técnico",
+        description:
+          "Instalación del equipo y asistencia durante el evento.",
+      },
+    ]}
+    image={seoImg}
+    imageAlt="Celebraciones y eventos"
+  >
+    <Fragment>
+      <h3 class="text-2xl font-bold tracking-tight sm:text-3xl mb-2">
+        Celebraciones y Eventos
+      </h3>
+      Disfruta de tu celebración con la tranquilidad de saber que el sonido, la 
+      iluminación y la música están en buenas manos. Nos adaptamos a cada evento 
+      para crear el ambiente ideal en XV años, bodas, cumpleaños, fiestas privadas, 
+      parkings y reuniones familiares.
+    </Fragment>
+  </Content2>
+
+  <Content2
+    items={[
+      {
+        title: "Amplio alcance local",
+        description:
+          "Lleva tu mensaje directamente a zonas específicas.",
+      },
+      {
+        title: "Campañas personalizadas",
+        description:
+          "Adaptamos el recorrido y contenido según tu objetivo.",
+      },
+    ]}
+    image={consultingImg}
+    imageAlt="Activacion y perifoneo"
+  >
+    <Fragment>
+      <h3 class="text-2xl font-bold tracking-tight sm:text-3xl mb-2">
+        Activaciones y Perifoneo
+      </h3>
+      Haz que tu marca llegue a más personas con nuestro servicio de activaciones 
+      y perifoneo móvil. Diseñamos campañas adaptadas a tus objetivos para 
+      promocionar productos, anunciar servicios, impulsar aperturas y fortalecer 
+      la presencia de tu negocio en zonas estratégicas.
+    </Fragment>
+  </Content2>
+</BaseLayout>
