@@ -6,24 +6,24 @@ on:
 
 jobs:
   web-deploy:
-    name: 🎉 Deploy
+    name: Deploy
     runs-on: ubuntu-24.04
     steps:
-    - name: 🚚 Get latest code
+    - name: Get latest code
       uses: actions/checkout@v4
 
-    - name: ⚙️ Use Node.js
+    - name: Use Node.js
       uses: actions/setup-node@v4
       with:
         node-version: '22' # Actualizado a Node 22 para limpiar las advertencias de obsolescencia
 
-    - name: 📦 Install dependencies
+    - name: Install dependencies
       run: npm install # Cambiado a 'npm install' para evitar fallos si tu package-lock.json no está perfectamente sincronizado
 
-    - name: 🏗️ Build Project
+    - name: Build Project
       run: npm run build
 
-    - name: 🚀 Sync files via FTP
+    - name: Sync files via FTP
       uses: SamKirkland/FTP-Deploy-Action@v4.3.5
       with:
         server: ${{ secrets.FTP_SERVER }}
