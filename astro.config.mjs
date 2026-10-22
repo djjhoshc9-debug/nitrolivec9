@@ -8,6 +8,9 @@ import remarkReadingTime from "remark-reading-time";
 export default defineConfig({
   site: "https://nitrolivec9.com/",
   integrations: [sitemap(), icon(), mdx()],
+  build: {
+    assets: 'assets' // Evita que GitHub Pages ignore los estilos y scripts nuevos
+  },
   markdown: {
     remarkPlugins: [
       remarkReadingTime,

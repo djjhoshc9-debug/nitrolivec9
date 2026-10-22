@@ -5,9 +5,14 @@ on:
     branches:
       - main # Se activa cada vez que haces "git push" a la rama main
 
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
 jobs:
   web-deploy:
-    name: 🚀 Compilar y Subir por FTP
+    name: Compilar y Subir por FTP
     runs-on: ubuntu-latest
     
     steps:
