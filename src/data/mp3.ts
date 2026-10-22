@@ -17,7 +17,7 @@ export const mp3List = [
     cover: "blog/mix/EspecialdesalsaRaul.webp",
     audioUrl: "https://www.dropbox.com/scl/fi/dspm9grnze8j1gtzleqab/Especial-Mix-Tito-Rojas-Mickey-Taveras-Maelo-Ruiz.mp3?rlkey=kddiutfizvn250ey66agwpvng&st=1qsn6zl9&dl=1",
     downloadUrl: "/download/Especial-salsa1-DjRaulinho",
-    downloads: 48
+    downloads: 49
   },
 {
     id: "mix104",
