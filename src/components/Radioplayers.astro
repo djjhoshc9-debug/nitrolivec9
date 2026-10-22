@@ -1,0 +1,160 @@
+---
+// Puedes añadir props aquí si quieres personalizar la URL del stream desde el Layout
+interface Props {
+  streamUrl?: string;
+}
+
+const { streamUrl = "https://stream.zeno.fm/45mep448hg8uv/stream" } = Astro.props;
+---
+
+<div class="player-container">
+  <div class="player-controls">
+    <!-- Botón de Play/Pausa personalizado -->
+    <button id="master-play-btn" class="play-btn" aria-label="Reproducir radio">
+      <span class="play-icon">▶</span>
+      <span class="pause-icon hidden">⏸</span>
+    </button>
+    
+    <div class="station-info">
+      <p class="station-title">Nitro Live C9</p>
+      <p id="player-status" class="station-status">En línea</p>
+    </div>
+  </div>
+
+  <!-- Elemento de audio nativo -->
+  <audio id="global-audio-element" src={streamUrl} preload="none"></audio>
+</div>
+
+<!-- Usamos is:inline para que el script se cargue una sola vez y persista en memoria -->
+<script is:inline>
+  (() => {
+    // Declaramos una función contenedora para poder llamarla cada vez que cambie la página
+    function vincularReproductor() {
+      const audio = document.getElementById('global-audio-element');
+      const playBtn = document.getElementById('master-play-btn');
+      const statusText = document.getElementById('player-status');
+      
+      if (!audio || !playBtn) return;
+
+      const playIcon = playBtn.querySelector('.play-icon');
+      const pauseIcon = playBtn.querySelector('.pause-icon');
+
+      // 1. Sincronizar visualmente los íconos si la música ya estaba sonando desde la página anterior
+      if (!audio.paused) {
+        if (playIcon) playIcon.classList.add('hidden');
+        if (pauseIcon) pauseIcon.classList.remove('hidden');
+        if (statusText) statusText.textContent = "Reproduciendo en vivo...";
+      } else {
+        if (playIcon) playIcon.classList.remove('hidden');
+        if (pauseIcon) pauseIcon.classList.add('hidden');
+      }
+
+      // 2. Remover el evento anterior (si existía) para evitar que se ejecute doble
+      playBtn.removeEventListener('click', playBtn._togglePlayback);
+
+      // 3. Crear la función de reproducción
+      playBtn._togglePlayback = function () {
+        if (audio.paused) {
+          // Recarga del stream para evitar retraso acumulado
+          const currentSrc = audio.src;
+          audio.src = "";
+          audio.src = currentSrc;
+          
+          audio.play()
+            .then(() => {
+              if (statusText) statusText.textContent = "Reproduciendo en vivo...";
+            })
+            .catch(err => console.error("Error al reproducir:", err));
+        } else {
+          audio.pause();
+          if (statusText) statusText.textContent = "Pausado";
+        }
+      };
+
+      // 4. Asignar el nuevo evento al botón de la página actual
+      playBtn.addEventListener('click', playBtn._togglePlayback);
+
+      // Escuchar eventos nativos del audio para actualizar la interfaz dinámicamente
+      audio.addEventListener('play', () => {
+        if (playIcon) playIcon.classList.add('hidden');
+        if (pauseIcon) pauseIcon.classList.remove('hidden');
+      });
+
+      audio.addEventListener('pause', () => {
+        if (playIcon) playIcon.classList.remove('hidden');
+        if (pauseIcon) pauseIcon.classList.add('hidden');
+      });
+    }
+
+    // Se ejecuta de inmediato en la primera carga de la web
+    vincularReproductor();
+
+    // ESCUCHAR EL EVENTO DE ASTRO: Vuelve a conectar los botones cuando cambias de artículo
+    document.addEventListener('astro:after-swap', vincularReproductor);
+  })();
+</script>
+
+
+<style>
+  .player-container {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background-color: #1a1a1a;
+    color: #ffffff;
+    padding: 15px 20px;
+    box-shadow: 0 -4px 10px rgba(0, 0, 0, 0.3);
+    z-index: 999;
+    border-top: 2px solid #ff4500; /* Color acento tipo "Nitro" */
+    font-family: system-ui, sans-serif;
+  }
+
+  .player-controls {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .play-btn {
+    background-color: #ff4500;
+    border: none;
+    color: white;
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    transition: transform 0.2s ease;
+  }
+
+  .play-btn:hover {
+    transform: scale(1.05);
+  }
+
+  .station-info {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .station-title {
+    margin: 0;
+    font-weight: bold;
+    font-size: 1rem;
+  }
+
+  .station-status {
+    margin: 0;
+    font-size: 0.8rem;
+    color: #aaaaaa;
+  }
+
+  .hidden {
+    display: none !important;
+  }
+</style>

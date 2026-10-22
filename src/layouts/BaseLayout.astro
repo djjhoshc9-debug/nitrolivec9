@@ -20,7 +20,7 @@ import Footer from "@/components/layout/Footer.astro";
 import { ClientRouter } from "astro:transitions";
 import "@/styles/global.css";
 import Analytics from "@vercel/analytics/astro";
-import RadioPlayer from "@/pages/RadioPLayer.astro";
+import Radioplayers from "../components/radioplayers.astro";
 
 import { siteConfig } from "@/config/site";
 
@@ -157,6 +157,6 @@ const finalIgnoreTitleTemplate = metadata?.ignoreTitleTemplate || false;
       document.addEventListener("astro:page-load", setupAnimations);
       document.addEventListener("astro:after-swap", setupAnimations);
     </script>
-    <RadioPlayer />
+    <Radioplayers transition:persist />
   </body>
 </html>
