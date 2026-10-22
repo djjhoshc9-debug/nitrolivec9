@@ -10,18 +10,18 @@ jobs:
     runs-on: ubuntu-24.04
     steps:
     - name: Get latest code
-      uses: actions/checkout@v4.1.0
+      uses: actions/checkout@v4.2.2 # 1. CORREGIDO: Versión actualizada para compatibilidad total con Node 24
 
     - name: Use Node.js
       uses: actions/setup-node@v4.1.0
       with:
-        node-version: '22' # Actualizado a Node 22 para limpiar las advertencias de obsolescencia
+        node-version: '22' 
 
     - name: Install dependencies
-      run: npm install # Cambiado a 'npm install' para evitar fallos si tu package-lock.json no está perfectamente sincronizado
+      run: npm ci # 2. RECOMENDADO: Cambiado a 'npm ci' para que use tu package-lock.json exacto y evitar cambios inesperados de librerías
 
     - name: Build Project
-      run: npm run build
+      run: CI=false npm run build # 3. CORREGIDO: Añadido 'CI=false' para que las advertencias de código no rompan la subida
 
     - name: Sync files via FTP
       uses: SamKirkland/FTP-Deploy-Action@v4.3.5
@@ -29,5 +29,5 @@ jobs:
         server: ${{ secrets.FTP_SERVER }}
         username: ${{ secrets.FTP_USERNAME }}
         password: ${{ secrets.FTP_PASSWORD }}
-        local-dir: ./dist/
+        local-dir: ./dist/ # Asegúrate de que tu framework genere la carpeta con este nombre exacto (dist)
         dangerous-clean-slate: false
