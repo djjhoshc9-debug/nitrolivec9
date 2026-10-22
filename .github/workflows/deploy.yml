@@ -1,37 +1,33 @@
-name: 🎉 Desplegar Web en cPanel
+name: Compilar y Subir por FTP
 
 on:
   push:
-    branches:
-      - main # Se activa cada vez que haces "git push" a la rama main
+    branches: [ main ]
 
 jobs:
   web-deploy:
-    name: Compilar y Subir por FTP
-    runs-on: ubuntu-latest
-    
+    name: 🎉 Deploy
+    runs-on: ubuntu-24.04
     steps:
-    - name:  Obtener el código del repositorio
+    - name: 🚚 Get latest code
       uses: actions/checkout@v4
 
-    - name:  Configurar Node.js
+    - name: ⚙️ Use Node.js
       uses: actions/setup-node@v4
       with:
-        node-version: '20' # Instala Node 20 en el servidor virtual de GitHub
-        cache: 'npm'
+        node-version: '22' # Actualizado a Node 22 para limpiar las advertencias de obsolescencia
 
-    - name:  Instalar dependencias
-      run: npm ci
+    - name: 📦 Install dependencies
+      run: npm install # Cambiado a 'npm install' para evitar fallos si tu package-lock.json no está perfectamente sincronizado
 
-    - name:  Compilar proyecto Astro
-      run: npm run build # Esto genera tu carpeta "dist" automáticamente
+    - name: 🏗️ Build Project
+      run: npm run build
 
-    - name:  Subir archivos a cPanel vía FTP
+    - name: 🚀 Sync files via FTP
       uses: SamKirkland/FTP-Deploy-Action@v4.3.5
       with:
         server: ${{ secrets.FTP_SERVER }}
         username: ${{ secrets.FTP_USERNAME }}
         password: ${{ secrets.FTP_PASSWORD }}
-        local-dir: ./dist/ # Sube únicamente el resultado compilado por Astro
-        server-dir: /public_html/ # Ajusta esta ruta si tus archivos van en otra carpeta dentro de cPanel
-        dangerous-clean-slate: false # Evita borrar archivos que no estén en tu Git (como carpetas del hosting)
+        local-dir: ./dist/
+        dangerous-clean-slate: false
