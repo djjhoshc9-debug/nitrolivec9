@@ -18,7 +18,7 @@ jobs:
         node-version: '22' 
 
     - name: Install dependencies
-      run: npm ci # 2. RECOMENDADO: Cambiado a 'npm ci' para que use tu package-lock.json exacto y evitar cambios inesperados de librerías
+      run: npm install # 2. RECOMENDADO: Cambiado a 'npm ci' para que use tu package-lock.json exacto y evitar cambios inesperados de librerías
 
     - name: Build Project
       run: CI=false npm run build # 3. CORREGIDO: Añadido 'CI=false' para que las advertencias de código no rompan la subida
