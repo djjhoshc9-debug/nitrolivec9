@@ -1,4 +1,14 @@
 export const mp3List = [
+  {
+    id: "mix107",
+    title: "Afrobeat Chill y Reggaeton - DjJhoshC9",
+    size: "156.41 MB",
+    date: "2026-11-03",
+    cover: "blog/mix/Afrobeat.webp",
+    audioUrl: "https://www.dropbox.com/scl/fi/c8k0b7jzye0hfawk3hkzw/Afrobeat-Chill-y-Reggaeton-DjJhoshC9.mp3?rlkey=uivlj730c0blufdwya6smmru5&st=klifnxfo&dl=1",
+    downloadUrl: "/download/Afrobeat-Chill-y-Reggaeton-DjJhoshC9",
+    downloads: 58
+  },
 {
     id: "mix105",
     title: "UrbanoMix Vol1 – @DjJhoshc9 @NitroLivec9",
