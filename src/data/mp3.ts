@@ -6,7 +6,7 @@ export const mp3List = [
     date: "2026-11-03",
     cover: "blog/mix/Afrobeat.webp",
     audioUrl: "https://www.dropbox.com/scl/fi/c8k0b7jzye0hfawk3hkzw/Afrobeat-Chill-y-Reggaeton-DjJhoshC9.mp3?rlkey=uivlj730c0blufdwya6smmru5&st=klifnxfo&dl=1",
-    downloadUrl: "/download/Afrobeat-Chill-y-Reggaeton-DjJhoshC9",
+    downloadUrl: "https://dl.nitrolivec9.com/mix107",
     downloads: 58
   },
 {
