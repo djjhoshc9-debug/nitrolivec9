@@ -10,7 +10,7 @@ export const mp3List = [
   },
 {
     id: "mix105",
-    title: "UrbanoMix Vol1 – @DjJhoshc9 @NitroLivec9",
+    title: "UrbanoMix Vol1 - @DjJhoshc9 @NitroLivec9",
     size: "208.0 MB",
     date: "2026-06-20",
     cover: "blog/mix/UrbanoMix.webp",

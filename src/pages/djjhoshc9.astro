@@ -1,0 +1,190 @@
+---
+// =========================================================================
+// ZONA DJ JHOSH C9
+// =========================================================================
+const mixes = [
+  {
+    id: "mix107", 
+    title: "Afrobeat Chill y Reggaeton - DjJhoshC9",
+    cover: "blog/mix/Afrobeat.webp",
+    audioUrl: "https://www.dropbox.com/scl/fi/c8k0b7jzye0hfawk3hkzw/Afrobeat-Chill-y-Reggaeton-DjJhoshC9.mp3?rlkey=uivlj730c0blufdwya6smmru5&st=klifnxfo&dl=1"
+  },
+  {
+    id: "mix105", 
+    title: "UrbanoMix Vol1 - @DjJhoshc9 @NitroLivec9",
+    cover: "blog/mix/UrbanoMix.webp",
+    audioUrl: "https://www.dropbox.com/scl/fi/cmmi42eolabjpk5nhspf1/UrbanoMix-Vol1-DjJhoshc9-NitroLivec9.mp3?rlkey=e643ttnf50997x0e4ze09qbnn&st=9zturwyk&dl=1"
+  },
+];
+---
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>DJ Jhosh C9 — Mixes Oficiales | Nitro Live C9</title>
+</head>
+<body>
+  <main class="wrapper">
+    <header class="profile-header">
+      <div class="brand">Nitro Live <span>C9</span></div>
+      <h1>DJ Jhosh <span>C9</span></h1>
+      <p>Escucha y descarga todos mis mixes oficiales</p>
+    </header>
+
+    <section class="mix-grid">
+      {mixes.map((mix) => (
+        <article class="mix-card">
+          <img src={mix.cover} alt={mix.title} class="mix-cover" loading="lazy" />
+          <div class="mix-info">
+            <h2>{mix.title}</h2>
+            
+            <!-- Reproductor de audio -->
+            <audio controls preload="none" class="audio-player">
+              <source src={mix.audioUrl} type="audio/mpeg" />
+              Tu navegador no soporta el reproductor de audio.
+            </audio>
+
+            <!-- Botón conectado a tu página de descarga PHP -->
+            <a href={"https://dl.nitrolivec9.com/?id=" + mix.id} target="_blank" rel="noopener noreferrer" class="btn-download">
+                Descargar MP3
+            </a>
+
+          </div>
+        </article>
+      ))}
+    </section>
+  </main>
+
+  <!-- automático AUDIO-->
+  <script>
+    document.addEventListener('play', (event) => {
+      const audios = document.querySelectorAll('audio');
+      audios.forEach((audio) => {
+        if (audio !== event.target) {
+          audio.pause();
+        }
+      });
+    }, true);
+  </script>
+</body>
+</html>
+
+<style>
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
+  body {
+    background-color: #121212;
+    color: #ffffff;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    padding: 30px 20px;
+  }
+
+  .wrapper {
+    max-width: 800px;
+    margin: 0 auto;
+  }
+
+  .profile-header {
+    text-align: center;
+    margin-bottom: 35px;
+  }
+
+  .brand {
+    font-size: 1rem;
+    font-weight: 700;
+    color: #a0a0a0;
+    margin-bottom: 8px;
+  }
+
+  .brand span, h1 span {
+    color: #3498db;
+  }
+
+  h1 {
+    font-size: 2rem;
+    margin-bottom: 8px;
+  }
+
+  .profile-header p {
+    color: #a0a0a0;
+    font-size: 0.95rem;
+  }
+
+  .mix-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .mix-card {
+    background: #1e1e1e;
+    border: 1px solid #2a2a2a;
+    border-radius: 16px;
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+  }
+
+  .mix-cover {
+    width: 110px;
+    height: 110px;
+    object-fit: cover;
+    border-radius: 12px;
+    flex-shrink: 0;
+    border: 1px solid #333;
+  }
+
+  .mix-info {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .mix-info h2 {
+    font-size: 1.1rem;
+    margin-bottom: 12px;
+    line-height: 1.3;
+  }
+
+  .audio-player {
+    width: 100%;
+    height: 40px;
+    margin-bottom: 12px;
+    border-radius: 8px;
+  }
+
+  .btn-download {
+    display: inline-block;
+    background-color: #3498db;
+    color: #ffffff;
+    text-decoration: none;
+    font-size: 0.85rem;
+    font-weight: 600;
+    padding: 8px 18px;
+    border-radius: 20px;
+    transition: background 0.2s;
+  }
+
+  .btn-download:hover {
+    background-color: #2980b9;
+  }
+
+  @media (max-width: 600px) {
+    .mix-card {
+      flex-direction: column;
+      text-align: center;
+    }
+
+    .mix-cover {
+      width: 160px;
+      height: 160px;
+    }
+  }
+</style>
