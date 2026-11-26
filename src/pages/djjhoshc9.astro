@@ -21,6 +21,12 @@ const mixes = [
     cover: "/blog/mix/cover.webp",
     audioUrl: "https://archive.org/download/salsa-mix-dj-jhosh-c-9/Salsa%20Mix%20-%20%40DjJhoshC9.mp3"
   },
+  {
+    id: "mix109", 
+    title: "El Exilio - Reggae Root - DjJhoshC9 @NitroLivec9",
+    cover: "/blog/mix/cover.webp",
+    audioUrl: "https://archive.org/download/el-exilio-reggae-root-dj-jhosh-c-9/El%20Exilio%20-%20Reggae%20Root%20-%20DjJhoshC9.mp3"
+  },
 ];
 ---
 
@@ -188,14 +194,16 @@ const mixes = [
   }
 
   .mix-card {
-    background: #1e1e1e;
-    border: 1px solid #2a2a2a;
+    background: rgba(15, 23, 42, 0.85);
+    backdrop-filter: blur(10px);
+    border: 1px solid #1e293b;
     border-radius: 16px;
     padding: 20px;
     display: flex;
     align-items: center;
     gap: 20px;
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    transition: border-color 0.2s ease, transform 0.2s ease;
   }
 
   .mix-cover {
