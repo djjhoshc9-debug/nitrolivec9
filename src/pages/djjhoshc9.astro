@@ -90,10 +90,38 @@ const mixes = [
             <h2>{mix.title}</h2>
             
             <!-- Reproductor de audio -->
-            <audio controls preload="none" class="audio-player">
-              <source src={mix.audioUrl} type="audio/mpeg" />
-              Tu navegador no soporta el reproductor de audio.
-            </audio>
+            
+<div class="custom-audio-player">
+
+  <audio preload="none" class="audio-player">
+    <source src={mix.audioUrl} type="audio/mpeg" />
+  </audio>
+
+  <button class="play-btn" type="button" aria-label="Reproducir mix">
+    ▶
+  </button>
+
+  <div class="player-controls">
+    <input
+      type="range"
+      class="progress-bar"
+      value="0"
+      min="0"
+      max="100"
+      aria-label="Progreso del mix"
+    />
+
+    <div class="player-time">
+      <span class="current-time">0:00</span>
+      <span class="duration">0:00</span>
+    </div>
+  </div>
+
+</div>
+
+<div class="audio-status" role="status" aria-live="polite"></div>
+
+            <div class="audio-status" role="status" aria-live="polite"></div>
 
             <!-- Botón conectado a tu página de descarga PHP -->
             <a href={"https://dl.nitrolivec9.com/?id=" + mix.id} target="_blank" rel="noopener noreferrer" class="btn-download">
@@ -132,16 +160,155 @@ const mixes = [
   </main>
 
   <!-- automático AUDIO-->
-  <script>
-    document.addEventListener('play', (event) => {
-      const audios = document.querySelectorAll('audio');
-      audios.forEach((audio) => {
-        if (audio !== event.target) {
-          audio.pause();
-        }
-      });
-    }, true);
-  </script>
+  
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+
+  const players = document.querySelectorAll('.custom-audio-player');
+
+  players.forEach((player) => {
+
+    const audio = player.querySelector('audio');
+    const playBtn = player.querySelector('.play-btn');
+    const progress = player.querySelector('.progress-bar');
+    const currentTime = player.querySelector('.current-time');
+    const duration = player.querySelector('.duration');
+
+    const status = player.parentElement.querySelector('.audio-status');
+
+    // Formato de tiempo
+    const formatTime = (seconds) => {
+      if (!Number.isFinite(seconds)) return '0:00';
+
+      const min = Math.floor(seconds / 60);
+      const sec = Math.floor(seconds % 60);
+
+      return min + ':' + String(sec).padStart(2, '0');
+    };
+
+    // Estado del mensaje
+    const updateStatus = (message, state) => {
+      status.textContent = message;
+      status.dataset.state = state;
+      status.classList.add('is-visible');
+    };
+
+    // Botón Play / Pause
+    playBtn.addEventListener('click', async () => {
+
+      if (!audio.paused) {
+        audio.pause();
+        return;
+      }
+
+      try {
+        await audio.play();
+      } catch (error) {
+        updateStatus(
+          'No se pudo reproducir este mix. Inténtalo nuevamente.',
+          'error'
+        );
+      }
+
+    });
+
+    // Icono según reproducción
+    audio.addEventListener('play', () => {
+      playBtn.textContent = '⏸';
+      playBtn.setAttribute('aria-label', 'Pausar mix');
+
+      updateStatus(
+        'Espera un momento mientras se reproduce el mix...',
+        'loading'
+      );
+    });
+
+    // Mientras carga
+    audio.addEventListener('waiting', () => {
+      updateStatus(
+        'Espera un momento mientras se reproduce el mix...',
+        'loading'
+      );
+    });
+
+    // Reproducción confirmada
+    audio.addEventListener('playing', () => {
+      updateStatus('Reproduciendo este mix', 'playing');
+    });
+
+    // Pausa
+    audio.addEventListener('pause', () => {
+      playBtn.textContent = '▶';
+      playBtn.setAttribute('aria-label', 'Reproducir mix');
+
+      status.classList.remove('is-visible');
+    });
+
+    // Datos del audio disponibles
+    audio.addEventListener('loadedmetadata', () => {
+      duration.textContent = formatTime(audio.duration);
+    });
+
+    // Actualizar progreso
+    audio.addEventListener('timeupdate', () => {
+
+      if (Number.isFinite(audio.duration) && audio.duration > 0) {
+        progress.value = (audio.currentTime / audio.duration) * 100;
+        currentTime.textContent = formatTime(audio.currentTime);
+      }
+
+    });
+
+    // Buscar posición en el mix
+    progress.addEventListener('input', () => {
+
+      if (Number.isFinite(audio.duration) && audio.duration > 0) {
+        audio.currentTime = (progress.value / 100) * audio.duration;
+      }
+
+    });
+
+    // Mix finalizado
+    audio.addEventListener('ended', () => {
+      playBtn.textContent = '▶';
+      playBtn.setAttribute('aria-label', 'Reproducir mix');
+      progress.value = 0;
+      currentTime.textContent = '0:00';
+
+      updateStatus('Mix finalizado', 'ended');
+    });
+
+    // Error de reproducción
+    audio.addEventListener('error', () => {
+      playBtn.textContent = '▶';
+      playBtn.setAttribute('aria-label', 'Reproducir mix');
+
+      updateStatus(
+        'No se pudo reproducir este mix. Inténtalo nuevamente.',
+        'error'
+      );
+    });
+
+  });
+
+  // Evitar que se reproduzcan dos mixes simultáneamente
+  document.addEventListener('play', (event) => {
+
+    if (event.target.tagName !== 'AUDIO') return;
+
+    document.querySelectorAll('.custom-audio-player audio').forEach((audio) => {
+      if (audio !== event.target) {
+        audio.pause();
+      }
+    });
+
+  }, true);
+
+});
+</script>
+
+
 </body>
 </html>
 
@@ -232,12 +399,117 @@ const mixes = [
     line-height: 1.3;
   }
 
-  .audio-player {
-    width: 100%;
-    height: 40px;
-    margin-bottom: 12px;
-    border-radius: 8px;
-  }
+  
+/* REPRODUCTOR PERSONALIZADO DJ JHOSH C9 */
+
+.custom-audio-player {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  height: 48px;
+  padding: 5px 10px;
+  margin-bottom: 3px;
+  background: #0b1120;
+  border: 1px solid #263b5e;
+  border-radius: 7px;
+}
+
+.play-btn {
+  width: 34px;
+  height: 34px;
+  min-width: 34px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #3498db;
+  color: #ffffff;
+  border: none;
+  border-radius: 5px;
+  font-size: 15px;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.play-btn:hover {
+  background: #2980b9;
+}
+
+.player-controls {
+  flex: 1;
+  min-width: 0;
+}
+
+.progress-bar {
+  display: block;
+  width: 100%;
+  height: 4px;
+  margin: 5px 0;
+  appearance: none;
+  -webkit-appearance: none;
+  background: #0e4fbe;
+  border-radius: 0;
+  outline: none;
+  cursor: pointer;
+}
+
+.progress-bar::-webkit-slider-thumb {
+  appearance: none;
+  -webkit-appearance: none;
+  width: 10px;
+  height: 10px;
+  background: #e82406;
+  border-radius: 2px;
+  cursor: pointer;
+}
+
+.progress-bar::-moz-range-thumb {
+  width: 10px;
+  height: 10px;
+  background: #3498db;
+  border: none;
+  border-radius: 2px;
+  cursor: pointer;
+}
+
+.player-time {
+  display: flex;
+  justify-content: space-between;
+  color: #94a3b8;
+  font-size: 10px;
+  line-height: 1;
+}
+
+/* ESTADO DEL MIX */
+
+.audio-status {
+  display: block;
+  min-height: 16px;
+  margin: 1px 0 7px;
+  font-size: 12px;
+  line-height: 16px;
+  text-align: left;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.2s ease;
+}
+
+.audio-status.is-visible {
+  opacity: 1;
+  visibility: visible;
+}
+
+.audio-status[data-state="loading"] {
+  color: #d69b32;
+}
+
+.audio-status[data-state="playing"] {
+  color: #22a06b;
+}
+
+.audio-status[data-state="error"] {
+  color: #dc5555;
+}
 
   .btn-download {
     display: inline-block;
@@ -328,6 +600,34 @@ const mixes = [
     transform: translateY(-2px);
     box-shadow: 0 4px 15px rgba(52, 152, 219, 0.3);
   }
+  .audio-status {
+  display: block;
+  min-height: 0.2em;
+  margin: 8px 0;
+  font-size: 13px;
+  line-height: 1.4;
+  color: inherit;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.2s ease;
+}
+
+.audio-status.is-visible {
+  opacity: 1;
+  visibility: visible;
+}
+
+.audio-status[data-state="loading"] {
+  color: #d69b32;
+}
+
+.audio-status[data-state="playing"] {
+  color: #22a06b;
+}
+
+.audio-status[data-state="error"] {
+  color: #dc5555;
+}
 
 
 
